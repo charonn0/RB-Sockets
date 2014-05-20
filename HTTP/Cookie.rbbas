@@ -28,7 +28,7 @@ Inherits Pair
 		      Case "Path"
 		        Me.Path = v
 		      Case "Expires"
-		        Me.Expires = DateString(v)
+		        Me.Expires = Sockets.ParseDate(v)
 		      Case "Port"
 		        Me.Port = Val(v)
 		      Case "Secure"
@@ -71,7 +71,7 @@ Inherits Pair
 		  If Me.Expires <> Nil Then
 		    Dim now As New Date
 		    If Me.Expires.TotalSeconds > now.TotalSeconds Then
-		      data = data + "; expires=" + DateString(Me.Expires)
+		      data = data + "; expires=" + Sockets.ParseDate(Me.Expires)
 		    End If
 		  End If
 		  
