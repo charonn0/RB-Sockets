@@ -1,5 +1,92 @@
 #tag Module
 Protected Module IRC
+	#tag Method, Flags = &h1
+		Protected Function FormatReply(ReplyCode As Integer) As String
+		  Static mReplies As Dictionary
+		  If mReplies = Nil Then
+		    mReplies = New Dictionary( _
+		    ERR_NOSUCHNICK:"<nickname> :No such nick/channel", _
+		    RPL_NONE:"Dummy reply number. Not used.", _
+		    RPL_USERHOST:"[<reply>{<space><reply>}]", _
+		    RPL_ISON:"[<nick> {<space><nick>}]", _
+		    RPL_AWAY:"<nick> :<away message>", _
+		    RPL_UNAWAY:"You are no longer marked as being away", _
+		    RPL_NOWAWAY:"You have been marked as being away", _
+		    RPL_WHOISUSER:"<nick> <user> <host> * :<real name>", _
+		    RPL_WHOISSERVER:"<nick> <server> :<server info>", _
+		    RPL_WHOISOPERATOR:"<nick> :is an IRC operator", _
+		    RPL_WHOISIDLE:"<nick> <integer> :seconds idle", _
+		    RPL_ENDOFWHOIS:"<nick> :End of /WHOIS list", _
+		    RPL_WHOISCHANNELS:"<nick> :{[@|+]<channel><space>}", _
+		    RPL_WHOWASUSER:"<nick> <user> <host> * :<real name>", _
+		    RPL_ENDOFWHOWAS:"<nick> :End of WHOWAS", _
+		    RPL_LISTSTART:"Channel :Users Name", _
+		    RPL_LIST:"<channel> <# visible> :<topic>", _
+		    RPL_LISTEND:"End of /LIST", _
+		    RPL_CHANNELMODEIS:"<channel> <mode> <mode params>", _
+		    RPL_NOTOPIC:"<channel> :No topic is set", _
+		    RPL_TOPIC:"<channel> :<topic>", _
+		    RPL_INVITING:"<channel> <nick>", _
+		    RPL_SUMMONING:"<user> :Summoning user to IRC", _
+		    RPL_VERSION:"<version>.<debuglevel> <server> :<comments>", _
+		    RPL_WHOREPLY:"<channel> <user> <host> <server> <nick> <H|G>[*][@|+] :<hopcount> <real name>", _
+		    RPL_ENDOFWHO:"<name> :End of /WHO list", _
+		    RPL_NAMREPLY:"<channel> :[[@|+]<nick> [[@|+]<nick> [...]]]", _
+		    RPL_ENDOFNAMES:"<channel> :End of /NAMES list", _
+		    RPL_LINKS:"<mask> <server> :<hopcount> <server info>", _
+		    RPL_ENDOFLINKS:"<mask> :End of /LINKS list", _
+		    RPL_BANLIST:"<channel> <banid>", _
+		    RPL_ENDOFBANLIST:"<channel> :End of channel ban list", _
+		    RPL_INFO:"<string>", _
+		    RPL_ENDOFINFO:"End of /INFO list", _
+		    RPL_MOTDSTART:"- <server> Message of the day - ", _
+		    RPL_MOTD:"- <text>", _
+		    RPL_ENDOFMOTD:"End of /MOTD command", _
+		    RPL_YOUREOPER:"You are now an IRC operator", _
+		    RPL_REHASHING:"<config file> :Rehashing", _
+		    RPL_TIME:"<server> :<string showing server's local time>", _
+		    RPL_USERSSTART:"UserID Terminal Host", _
+		    RPL_USERS:"%-8s %-9s %-8s", _
+		    RPL_ENDOFUSERS:"End of users", _
+		    RPL_NOUSERS:"Nobody logged in", _
+		    RPL_TRACELINK:"Link <version & debug level> <destination> <next server>", _
+		    RPL_TRACECONNECTING:"Try. <class> <server>", _
+		    RPL_TRACEHANDSHAKE:"H.S. <class> <server>", _
+		    RPL_TRACEUNKNOWN:"???? <class> [<client IP address in dot form>]", _
+		    RPL_TRACEOPERATOR:"Oper <class> <nick>", _
+		    RPL_TRACEUSER:"User <class> <nick>", _
+		    RPL_TRACESERVER:"Serv <class> <int>S <int>C <server> <nick!user|*!*>@<host|server>", _
+		    RPL_TRACENEWTYPE:"<newtype> 0 <client name>", _
+		    RPL_TRACELOG:"File <logfile> <debug level>", _
+		    RPL_STATSLINKINFO:"<linkname> <sendq> <sent messages> <sent bytes> <received messages> <received bytes> <time open>", _
+		    RPL_STATSCOMMANDS:"<command> <count>", _
+		    RPL_STATSCLINE:"C <host> * <name> <port> <class>", _
+		    RPL_STATSNLINE:"N <host> * <name> <port> <class>", _
+		    RPL_STATSILINE:"I <host> * <host> <port> <class>", _
+		    RPL_STATSKLINE:"K <host> * <username> <port> <class>", _
+		    RPL_STATSYLINE:"Y <class> <ping frequency> <connect frequency> <max sendq>", _
+		    RPL_ENDOFSTATS:"<stats letter> :End of /STATS report", _
+		    RPL_STATSLLINE:"L <hostmask> * <servername> <maxdepth>", _
+		    RPL_STATSUPTIME:"Server Up %d days %d:%02d:%02d", _
+		    RPL_STATSOLINE:"O <hostmask> * <name>", _
+		    RPL_STATSHLINE:"H <hostmask> * <servername>", _
+		    RPL_UMODEIS:"<user mode string>", _
+		    RPL_LUSERCLIENT:"There are <integer> users and <integer> invisible on <integer> servers", _
+		    RPL_LUSEROP:"<integer> :operator(s) online", _
+		    RPL_LUSERUNKNOWN:"<integer> :unknown connection(s)", _
+		    RPL_LUSERCHANNELS:"<integer> :channels formed", _
+		    RPL_LUSERME:"I have <integer> clients and <integer> servers", _
+		    RPL_ADMINME:"<server> :Administrative info", _
+		    RPL_ADMINLOC1:"<admin info>", _
+		    RPL_ADMINLOC2:"<admin info>", _
+		    RPL_ADMINEMAIL:"<admin info>")
+		  End If
+		  
+		  Return mReplies.Lookup(ReplyCode, "Unknown IRC code: " + Str(ReplyCode))
+		End Function
+	#tag EndMethod
+
+
 	#tag Constant, Name = ERR_ALREADYREGISTRED, Type = Double, Dynamic = False, Default = \"462", Scope = Protected
 	#tag EndConstant
 
