@@ -23,6 +23,7 @@ Class=Message;IRC/Message.rbbas;&h255C37FF;&h5DCB5FFF;false
 Class=Hostmask;IRC/Hostmask.rbbas;&h3EB40FFF;&h5DCB5FFF;false
 Class=Connection;IRC/Connection.rbbas;&h52B2DFFF;&h5DCB5FFF;false
 Class=URI;Sockets/URI.rbbas;&h649EAFFF;&h49CABFFF;false
+Class=Mode;IRC/Mode.rbbas;&h1FDE0FFF;&h5DCB5FFF;false
 MajorVersion=1
 MinorVersion=0
 SubVersion=0
