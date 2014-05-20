@@ -2,27 +2,21 @@
 Protected Class Connection
 Inherits SSLSocket
 	#tag Event
-		Sub Connected()
-		  Me.Write("USER " + Me.Host.Nick + " 0 * " + Me.Host.UserName + EndOfLine.Windows)
-		  If Me.Password <> "" Then Me.Write("PASS " + Me.Host.Password + EndOfLine.Windows)
-		  Me.Write("NICK " + Me.Host.Nick + EndOfLine.Windows)
-		End Sub
-	#tag EndEvent
-
-	#tag Event
 		Sub DataAvailable()
-		  Dim data As String = Me.ReadAll
-		  Dim s() As String = Split(data, EndOfLine.Windows)
-		  
-		  For i As Integer = 0 To UBound(s)
-		    Dim line As String = s(i)
-		    If line.Trim = "" Then Continue
-		    If NthField(line, " ", 1) = "PING" Then
-		      Me.Write("PONG :" + Right(line, line.Len - 5) + EndOfLine.Windows)
-		    Else
-		      RaiseEvent MessageReceived(New IRC.Message(line))
+		  Dim i As Integer = InStr(Me.Lookahead, CRLF)
+		  Do Until i = 0
+		    Dim line As String = Me.Read(i + 3)
+		    If line.Trim <> "" Then
+		      Dim msg As New IRC.Message(line)
+		      Select Case msg.Command
+		      Case "PING"
+		        Me.Write("PONG :" + Right(line, line.Len - 5) + EndOfLine.Windows)
+		      End Select
+		      
+		      RaiseEvent MessageReceived(msg)
 		    End If
-		  Next
+		    i = InStr(Me.Lookahead, CRLF)
+		  Loop
 		End Sub
 	#tag EndEvent
 
@@ -41,10 +35,6 @@ Inherits SSLSocket
 
 	#tag Property, Flags = &h0
 		Host As Hostmask
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		Password As String
 	#tag EndProperty
 
 
