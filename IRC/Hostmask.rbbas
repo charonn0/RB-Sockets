@@ -105,10 +105,6 @@ Protected Class Hostmask
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		Password As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
 		UserName As String = "*"
 	#tag EndProperty
 
