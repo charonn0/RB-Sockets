@@ -102,11 +102,6 @@ Protected Class Message
 			InheritedFrom="Object"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="InternalMessage"
-			Group="Behavior"
-			Type="Boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="Left"
 			Visible=true
 			Group="Position"
