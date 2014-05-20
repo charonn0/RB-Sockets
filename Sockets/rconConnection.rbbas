@@ -1,6 +1,6 @@
 #tag Class
 Protected Class rconConnection
-Inherits TCPSocket
+Inherits SSLSocket
 	#tag Event
 		Sub Connected()
 		  OutStandingRequests = New Dictionary

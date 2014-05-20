@@ -1,6 +1,6 @@
 #tag Class
 Protected Class Connection
-Inherits TCPSocket
+Inherits SSLSocket
 	#tag Event
 		Sub DataAvailable()
 		  ' This method receives and processes all requests made to the socket,

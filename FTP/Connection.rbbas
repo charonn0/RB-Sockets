@@ -1,6 +1,6 @@
 #tag Class
 Protected Class Connection
-Inherits TCPSocket
+Inherits SSLSocket
 	#tag Event
 		Sub Error()
 		  If Me.LastErrorCode = 102 Then
@@ -73,7 +73,7 @@ Inherits TCPSocket
 	#tag Method, Flags = &h21
 		Private Sub CreateDataSocket(PASVParams As String, NetInterface As NetworkInterface = Nil)
 		  Me.CloseData
-		  DataSocket = New TCPSocket
+		  DataSocket = New SSLSocket
 		  If NetInterface <> Nil Then
 		    DataSocket.NetworkInterface = NetInterface
 		  Else
@@ -101,7 +101,7 @@ Inherits TCPSocket
 	#tag EndMethod
 
 	#tag Method, Flags = &h21
-		Private Sub DataAvailableHandler(Sender As TCPSocket)
+		Private Sub DataAvailableHandler(Sender As SSLSocket)
 		  'Handles DataSocket.DataAvailable
 		  Dim s As String = Sender.ReadAll
 		  DataReadBuffer = DataReadBuffer + s
@@ -116,7 +116,7 @@ Inherits TCPSocket
 	#tag EndMethod
 
 	#tag Method, Flags = &h21
-		Private Sub ErrorHandler(Sender As TCPSocket)
+		Private Sub ErrorHandler(Sender As SSLSocket)
 		  If Sender.LastErrorCode = 102 Then
 		    Sender.Close
 		    TransferInProgress = False
@@ -176,7 +176,7 @@ Inherits TCPSocket
 	#tag EndMethod
 
 	#tag Method, Flags = &h21
-		Private Sub SendCompleteHandler(Sender As TCPSocket, UserAborted As Boolean)
+		Private Sub SendCompleteHandler(Sender As SSLSocket, UserAborted As Boolean)
 		  'Handles DataSocket.SendComplete
 		  #pragma Unused Sender
 		  TransferInProgress = False
@@ -185,7 +185,7 @@ Inherits TCPSocket
 	#tag EndMethod
 
 	#tag Method, Flags = &h21
-		Private Function SendProgressHandler(Sender As TCPSocket, BytesSent As Integer, BytesLeft As Integer) As Boolean
+		Private Function SendProgressHandler(Sender As SSLSocket, BytesSent As Integer, BytesLeft As Integer) As Boolean
 		  'Handles DataSocket.SendProgress
 		  #pragma Unused Sender
 		  Return RaiseEvent TransferProgress(BytesSent, BytesLeft)
@@ -437,7 +437,7 @@ Inherits TCPSocket
 		client or server flavor. Other non-socket data which is used in both clients and 
 		servers are also dealt with in FTPSocket.
 		
-		This class is not intended to be used except as the superclass of another TCPSocket 
+		This class is not intended to be used except as the superclass of another SSLSocket 
 		that handles protocol layer stuff via the DataAvailable event and Write, WriteData,
 		Read, and ReadData methods.
 	#tag EndNote
@@ -452,7 +452,7 @@ Inherits TCPSocket
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
-		Private DataSocket As TCPSocket
+		Private DataSocket As SSLSocket
 	#tag EndProperty
 
 	#tag Property, Flags = &h1

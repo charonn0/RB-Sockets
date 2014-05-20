@@ -47,7 +47,7 @@ Inherits FTP.Connection
 	#tag Method, Flags = &h1000
 		Sub Constructor()
 		  // Calling the overridden superclass constructor.
-		  // Constructor() -- From TCPSocket
+		  // Constructor() -- From SSLSocket
 		  Super.Constructor
 		  Me.ServerFeatures = Split("PASV,UTF8,MDTM,SIZE,REST STREAM,TVFS", ",")
 		End Sub
