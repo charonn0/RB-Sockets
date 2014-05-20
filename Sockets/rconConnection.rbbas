@@ -134,11 +134,33 @@ Inherits SSLSocket
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="Address"
+			Name="CertificateFile"
+			Visible=true
+			Group="Behavior"
+			Type="FolderItem"
+			InheritedFrom="SSLSocket"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="CertificatePassword"
 			Visible=true
 			Group="Behavior"
 			Type="String"
-			InheritedFrom="TCPSocket"
+			InheritedFrom="SSLSocket"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="CertificateRejectionFile"
+			Visible=true
+			Group="Behavior"
+			Type="FolderItem"
+			InheritedFrom="SSLSocket"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ConnectionType"
+			Visible=true
+			Group="Behavior"
+			InitialValue="2"
+			Type="Integer"
+			InheritedFrom="SSLSocket"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
@@ -168,12 +190,11 @@ Inherits SSLSocket
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Port"
+			Name="Secure"
 			Visible=true
 			Group="Behavior"
-			InitialValue="0"
-			Type="Integer"
-			InheritedFrom="TCPSocket"
+			Type="Boolean"
+			InheritedFrom="SSLSocket"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
