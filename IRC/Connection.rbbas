@@ -6,8 +6,6 @@ Inherits SSLSocket
 		  Me.Write("USER " + Me.Host.Nick + " 0 * " + Me.Host.UserName + EndOfLine.Windows)
 		  If Me.Password <> "" Then Me.Write("PASS " + Me.Host.Password + EndOfLine.Windows)
 		  Me.Write("NICK " + Me.Host.Nick + EndOfLine.Windows)
-		  Me.Host.Nick = "{Socket}"
-		  Me.Host.UserName = "{EndPoint}"
 		End Sub
 	#tag EndEvent
 
@@ -22,42 +20,16 @@ Inherits SSLSocket
 		    If NthField(line, " ", 1) = "PING" Then
 		      Me.Write("PONG :" + Right(line, line.Len - 5) + EndOfLine.Windows)
 		    Else
-		      SendMessage(New IRC.Message(line))
+		      RaiseEvent MessageReceived(New IRC.Message(line))
 		    End If
 		  Next
 		End Sub
 	#tag EndEvent
 
-	#tag Event
-		Sub Error()
-		  Dim msg As New IRC.Message
-		  msg.Sender = Me.Host
-		  msg.Command = "Error"
-		  msg.InternalMessage = True
-		  msg.Parameters = Array(Sockets.SocketErrorMessage(Me))
-		  SendMessage(msg)
-		End Sub
-	#tag EndEvent
-
 
 	#tag Method, Flags = &h0
-		Sub HandleInboundMessage(Message As IRC.Message)
-		  // Part of the IRC.CoreInterface interface.
-		  Me.Write(Message.ToString)
-		  Me.Flush
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function Name() As IRC.HostMask
-		  Return Me.Host
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub SendMessage(Message As IRC.Message)
-		  // Part of the IRC.CoreInterface interface.
-		  RaiseEvent MessageReceived(Message)
+		Sub SendMessage(Msg As IRC.Message)
+		  Me.Write(Msg.ToString)
 		End Sub
 	#tag EndMethod
 

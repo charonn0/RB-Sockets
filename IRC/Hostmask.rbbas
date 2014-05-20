@@ -1,16 +1,6 @@
 #tag Class
 Protected Class Hostmask
 	#tag Method, Flags = &h0
-		Sub Constructor(RawHostMask As String)
-		  Me.Host = NthField(RawHostMask, "@", 2)
-		  RawHostMask = Replace(RawHostMask, "@" + Me.Host, "")
-		  Me.UserName = NthField(RawHostMask, "!", 2)
-		  Me.Nick = NthField(RawHostMask, "!", 1)
-		  
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
 		Sub Constructor(Username As String, Nickname As String, Hostname As String)
 		  Me.Host = Hostname
 		  Me.Nick = Nickname
@@ -19,12 +9,21 @@ Protected Class Hostmask
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		 Shared Function FromString(RawHostMask As String) As IRC.Hostmask
+		  Dim h, u, n As String
+		  h = NthField(RawHostMask, "@", 2)
+		  RawHostMask = Replace(RawHostMask, "@" + h, "")
+		  u = NthField(RawHostMask, "!", 2)
+		  n = NthField(RawHostMask, "!", 1)
+		  Return New IRC.Hostmask(u, n, h)
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function Matches(OtherMask As Hostmask) As Boolean
 		  'Returns True if the passed OtherMask can apply to the current Hostmask
-		  If OtherMask.Type <> Me.Type Then Return False
-		  'Select Case Me.HostTypes
-		  'Case HostTypes.Network 'Normal
-		  If OtherMask = Me Then Return True
+		  If OtherMask Is Me Then Return True
 		  
 		  Dim u, h, n As Boolean
 		  
@@ -110,19 +109,8 @@ Protected Class Hostmask
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		Type As HostTypes
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
 		UserName As String = "*"
 	#tag EndProperty
-
-
-	#tag Enum, Name = HostTypes, Type = Integer, Flags = &h0
-		Network
-		  Local
-		Internal
-	#tag EndEnum
 
 
 	#tag ViewBehavior

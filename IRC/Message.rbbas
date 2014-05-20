@@ -29,7 +29,7 @@ Protected Class Message
 		  Me.Command = cmd
 		  Me.Parameters = params
 		  If prefix.Trim <> "" Then
-		    Me.Sender = New Hostmask(prefix)
+		    Me.Sender = IRC.Hostmask.FromString(prefix)
 		  End If
 		End Sub
 	#tag EndMethod
@@ -39,30 +39,12 @@ Protected Class Message
 		  If UBound(Me.Parameters) > 1 Or UBound(Me.Parameters) <= -1 Then
 		    Raise New OutOfBoundsException
 		  End If
-		  Return New Hostmask(Me.Parameters(0))
+		  Return Hostmask.FromString(Me.Parameters(0))
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Function ToString() As String
-		  'Dim data As String
-		  'If Sender <> Nil Then
-		  'data = data + ":" + Sender.ToString + " "
-		  'End If
-		  'data = data + Command + " "
-		  ''If Target <> Nil Then
-		  ''If Target.Nick <> "$$Transmitter$$" Then
-		  'data = data + Target.ToString + " "
-		  ''End If
-		  '
-		  'If Parameters <> "" Then data = data + Parameters + " "
-		  '
-		  'If UBound(Arguments) >= 0 Then
-		  'data = data + ":" + Join(Arguments, " ")
-		  'End If
-		  '
-		  'Return data.Trim
-		  
 		  Dim msg As String
 		  Static space As String = Chr(&h20)
 		  Static colon As String = Chr(&h3a)
@@ -93,10 +75,6 @@ Protected Class Message
 
 	#tag Property, Flags = &h0
 		Command As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		InternalMessage As Boolean
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
