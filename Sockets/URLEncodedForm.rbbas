@@ -1,5 +1,5 @@
 #tag Class
-Protected Class URLEncodedForm
+Class URLEncodedForm
 	#tag Method, Flags = &h0
 		Sub Constructor()
 		  Me.Constructor(New Dictionary)
@@ -35,7 +35,7 @@ Protected Class URLEncodedForm
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		 Shared Function FromString(urlencodedform As String) As HTTP.URLEncodedForm
+		 Shared Function FromData(urlencodedform As String) As HTTP.URLEncodedForm
 		  Dim items() As String = Split(urlencodedform.Trim, "&")
 		  Dim f As New Dictionary
 		  Dim dcount As Integer = UBound(items)
