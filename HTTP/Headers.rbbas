@@ -74,16 +74,6 @@ Inherits InternetHeaders
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function HasHeader(HeaderName As String) As Boolean
-		  For i As Integer = 0 To Me.Count - 1
-		    If Me.Name(i) = HeaderName Then
-		      Return True
-		    End If
-		  Next
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
 		Function Source(SetCookies As Boolean = False) As String
 		  Dim data As String = Super.Source
 		  

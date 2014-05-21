@@ -59,6 +59,16 @@ Protected Module Sockets
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function HasHeader(Extends h As InternetHeaders, HeaderName As String) As Boolean
+		  For i As Integer = 0 To h.Count - 1
+		    If h.Name(i) = HeaderName Then
+		      Return True
+		    End If
+		  Next
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function LastErrorMessage(Extends Sender As SocketCore) As String
 		  Dim msg As String
 		  Select Case Sender.LastErrorCode
