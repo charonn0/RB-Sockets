@@ -6,6 +6,11 @@ Inherits HTTP.Connection
 		  ' This event receives and processes all requests made to the server,
 		  ' raises the HandleRequest event, and sends the response to the client.
 		  Dim mth As String = NthField(MessageLine, " ", 1).Trim
+		  
+		  
+		  
+		  
+		  
 		  Dim path As New Sockets.URI(NthField(MessageLine, " ", 2))
 		  Dim ProtocolVersion As Single = CDbl(Replace(NthField(MessageLine, " ", 3).Trim, "HTTP/", ""))
 		  

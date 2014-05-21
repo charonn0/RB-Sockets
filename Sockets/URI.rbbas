@@ -2,12 +2,6 @@
 Protected Class URI
 	#tag Method, Flags = &h0
 		Sub Constructor(URL As String)
-		  Parse(URL)
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h21
-		Private Sub Parse(URL As String)
 		  //The Parse method accepts a string as input and parses that string as a URI into the various class properties.
 		  
 		  If NthField(URL, ":", 1) <> "mailto" Then
