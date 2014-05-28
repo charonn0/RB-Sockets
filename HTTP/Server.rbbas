@@ -1,44 +1,6 @@
 #tag Class
 Protected Class Server
 Inherits HTTP.Connection
-	#tag Event
-		Sub Message(MessageLine As String, Headers As HTTP.Headers, Content As String)
-		  ' This event receives and processes all requests made to the server,
-		  ' raises the HandleRequest event, and sends the response to the client.
-		  Dim mth As String = NthField(MessageLine, " ", 1).Trim
-		  
-		  
-		  
-		  
-		  
-		  Dim path As New Sockets.URI(NthField(MessageLine, " ", 2))
-		  Dim ProtocolVersion As Single = CDbl(Replace(NthField(MessageLine, " ", 3).Trim, "HTTP/", ""))
-		  
-		  If Not RaiseEvent HandleRequest(mth, path.Path, Headers, content, ProtocolVersion) Then
-		    Dim status As Integer
-		    Select Case mth
-		    Case "GET", "Headers"
-		      status = 404
-		    Case "POST", "DELETE", "PUT", "TRACE", "OPTIONS", "PATCH", "CONNECT"
-		      status = 405
-		    Else
-		      If mth.Trim <> "" Then
-		        status = 501
-		      Else
-		        status = 400
-		      End If
-		    End Select
-		    Dim msg As String = DefaultPage(status)
-		    Dim h As New HTTP.Headers
-		    h.AppendHeader("Connection", "close")
-		    h.AppendHeader("Content-Length", Str(msg))
-		    Me.SendMessage(Status, h, msg, ProtocolVersion)
-		  End If
-		  
-		End Sub
-	#tag EndEvent
-
-
 	#tag Method, Flags = &h1
 		Protected Shared Function DefaultPage(StatusCode As Integer) As String
 		  Dim data As String = ReplaceAll(BlankPage, "%HTTPCODE%", HTTP.FormatStatus(StatusCode))
