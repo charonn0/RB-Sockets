@@ -7,18 +7,46 @@ Protected Module Sockets
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Function FormatBytes(bytes As UInt64, precision As Integer = 2) As String
+		Protected Function FindFile(RootDirectory As FolderItem, FilePath As String) As FolderItem
+		  Dim out As FolderItem = RootDirectory
+		  Dim rootpath As String = RootDirectory.AbsolutePath
+		  
+		  For i As Integer = 1 To CountFields(FilePath, "/")
+		    Dim element As String = DecodeURLComponent(NthField(FilePath, "/", i))
+		    If element = "" Then Continue
+		    Select Case element.Trim
+		    Case ".." ' up one
+		      If out.Parent = Nil Then Return Nil ' cannot go up from the volume root
+		      Dim pp As String = out.Parent.AbsolutePath
+		      If Left(pp, rootpath.Len) <> rootpath Then Return Nil ' not contained within root
+		      out = out.Parent
+		    Case ".", "" ' current
+		      out = out ' No-op
+		    Case Else
+		      out = out.Child(element)
+		      If Not out.Exists Then Return Nil
+		    End Select
+		  Next
+		  Return out
+		  
+		Exception
+		  Return Nil
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function FormatBytes(bytes As Int64, precision As Integer = 2) As String
 		  'Converts raw byte counts into SI formatted strings. 1KB = 1024 bytes.
 		  'Optionally pass an integer representing the number of decimal places to return. The default is two decimal places. You may specify
 		  'between 0 and 16 decimal places. Specifying more than 16 will append extra zeros to make up the length. Passing 0
 		  'shows no decimal places and no decimal point.
 		  
 		  Const kilo = 1024
-		  Static mega As UInt64 = kilo * kilo
-		  Static giga As UInt64 = kilo * mega
-		  Static tera As UInt64 = kilo * giga
-		  Static peta As UInt64 = kilo * tera
-		  Static exab As UInt64 = kilo * peta
+		  Static mega As Int64 = kilo * kilo
+		  Static giga As Int64 = kilo * mega
+		  Static tera As Int64 = kilo * giga
+		  Static peta As Int64 = kilo * tera
+		  Static exab As Int64 = kilo * peta
 		  
 		  Dim suffix, precisionZeros As String
 		  Dim strBytes As Double
