@@ -1,6 +1,7 @@
 #tag Class
 Protected Class Cookie
 Inherits Pair
+Implements Sockets.Serializable
 	#tag Method, Flags = &h1000
 		Sub Constructor(Raw As String)
 		  'accepts a single raw Cookie string (e.g. "SessionID=12345; Port=80; httpOnly")

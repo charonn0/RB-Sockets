@@ -1,5 +1,6 @@
 #tag Class
 Class MultipartForm
+Implements Sockets.Serializable
 	#tag Method, Flags = &h0
 		Sub Constructor()
 		  mFormElements = New Dictionary

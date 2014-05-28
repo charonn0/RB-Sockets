@@ -1,5 +1,6 @@
 #tag Class
 Protected Class URI
+Implements Sockets.Serializable
 	#tag Method, Flags = &h0
 		Sub Constructor(URL As String)
 		  //The Parse method accepts a string as input and parses that string as a URI into the various class properties.

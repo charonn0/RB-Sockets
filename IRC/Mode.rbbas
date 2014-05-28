@@ -1,5 +1,6 @@
 #tag Class
 Protected Class Mode
+Implements Sockets.Serializable
 	#tag Method, Flags = &h0
 		 Shared Function FromString(NewMode As String) As IRC.Mode
 		  Dim modes() As String = Split(NewMode, "")

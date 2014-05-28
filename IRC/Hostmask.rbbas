@@ -1,5 +1,6 @@
 #tag Class
 Protected Class Hostmask
+Implements Sockets.Serializable
 	#tag Method, Flags = &h0
 		Sub Constructor(Username As String, Nickname As String, Hostname As String)
 		  Me.Host = Hostname
@@ -149,12 +150,6 @@ Protected Class Hostmask
 			Name="Nick"
 			Group="Behavior"
 			InitialValue="*"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Password"
-			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty

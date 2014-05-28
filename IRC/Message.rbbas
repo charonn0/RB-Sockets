@@ -1,5 +1,6 @@
 #tag Class
 Protected Class Message
+Implements Sockets.Serializable
 	#tag Method, Flags = &h0
 		Sub Constructor(Raw As String = "")
 		  Dim space As String = Chr(&h20)

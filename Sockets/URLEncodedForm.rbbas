@@ -1,5 +1,6 @@
 #tag Class
 Class URLEncodedForm
+Implements Sockets.Serializable
 	#tag Method, Flags = &h0
 		Sub Constructor()
 		  Me.Constructor(New Dictionary)

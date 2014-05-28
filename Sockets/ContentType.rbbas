@@ -1,5 +1,6 @@
 #tag Class
 Class ContentType
+Implements Sockets.Serializable
 	#tag Method, Flags = &h0
 		Function Acceptance(OtherType As ContentType) As Single
 		  'Returns a Single that is <=1. This is the comparative "weight" of the match between the
