@@ -167,16 +167,21 @@ Implements Sockets.Serializable
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="FQDN"
+			Name="EncodeArguments"
 			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
+			InitialValue="False"
+			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Fragment"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Host"
+			Group="Behavior"
+			Type="String"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
