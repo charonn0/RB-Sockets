@@ -21,7 +21,6 @@ Implements Sockets.Serializable
 
 	#tag Method, Flags = &h0
 		Sub Element(Name As String, Assigns Value As Variant)
-		  If Value IsA FolderItem And FolderItem(Value).Name = "which.exe" Then Break
 		  If Value = Nil Then
 		    mFormElements.Remove(Name)
 		  Else
@@ -43,8 +42,18 @@ Implements Sockets.Serializable
 		    name = NthField(name, "=", 2)
 		    name = ReplaceAll(name, """", "")
 		    If name.Trim = "" Then Continue For i
+		    Dim j As Integer
+		    Dim nm As String = name
+		    Do
+		      If form.HasElement(nm) Then
+		        j = j + 1
+		        nm = name + Str(j)
+		      Else
+		        Exit Do
+		      End If
+		    Loop
 		    If CountFields(line, ";") < 3 Then 'form data
-		      form.Element(name) = NthField(elements(i), CRLF + CRLF, 2)
+		      form.Element(nm) = NthField(elements(i), CRLF + CRLF, 2)
 		    Else 'file
 		      Dim filename As String = NthField(line, ";", 3)
 		      filename = NthField(filename, "=", 2)
@@ -57,7 +66,7 @@ Implements Sockets.Serializable
 		        filedata = filedata.StringValue(t, filedata.Size - t - 2)
 		        bs.Write(filedata)
 		        bs.Close
-		        form.Element(filename) = tmp
+		        form.Element(nm) = tmp
 		      Catch Err As IOException
 		        Continue For i
 		      End Try
@@ -107,13 +116,6 @@ Implements Sockets.Serializable
 		  Return "Content-Type: multipart/form-data; boundary=" + Me.Boundary + CRLF + CRLF + data
 		End Function
 	#tag EndMethod
-
-
-	#tag Note, Name = About this class
-		This class allows you to construct a multipart/formdata object.
-		
-		Add or remove
-	#tag EndNote
 
 
 	#tag Property, Flags = &h0
