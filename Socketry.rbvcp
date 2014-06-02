@@ -27,7 +27,6 @@ Class=URI;Sockets/URI.rbbas;&h649EAFFF;&h49CABFFF;false
 Class=Mode;IRC/Mode.rbbas;&h1FDE0FFF;&h5DCB5FFF;false
 Class=Client;IRC/Client.rbbas;&h403A47FF;&h5DCB5FFF;false
 Window=Window1;Window1.rbfrm;&h46CFBFFF;&h0;false
-Class=FileServer;HTTP/FileServer.rbbas;&h19E957FF;&h261CEFFF;false
 Module=Auth;HTTP/Auth.rbbas;&hD10C7FF;&h261CEFFF;false
 DefaultWindow=Window1
 MajorVersion=1
