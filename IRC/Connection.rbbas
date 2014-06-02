@@ -7,7 +7,7 @@ Inherits SSLSocket
 		  Do Until i = 0
 		    Dim line As String = Me.Read(i + 3)
 		    If line.Trim <> "" Then
-		      Dim msg As New IRC.Message(line)
+		      Dim msg As IRC.Message = IRC.Message.FromString(line)
 		      Select Case msg.Command
 		      Case "PING"
 		        Me.Write("PONG :" + Right(line, line.Len - 5) + EndOfLine.Windows)
@@ -88,12 +88,6 @@ Inherits SSLSocket
 			Group="ID"
 			Type="String"
 			InheritedFrom="SSLSocket"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Password"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Secure"

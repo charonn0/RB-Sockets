@@ -2,7 +2,8 @@
 Protected Class Message
 Implements Sockets.Serializable
 	#tag Method, Flags = &h0
-		Sub Constructor(Raw As String = "")
+		 Shared Function FromString(Raw As String) As IRC.Message
+		  Dim msg As New IRC.Message
 		  Dim space As String = Chr(&h20)
 		  Dim colon As String = Chr(&h3a)
 		  Dim prefix, cmd, params(), trailing As String
@@ -27,12 +28,14 @@ Implements Sockets.Serializable
 		  Next
 		  If trailing.Trim <> "" Then params.Append(trailing)
 		  
-		  Me.Command = cmd
-		  Me.Parameters = params
+		  msg.Command = cmd
+		  msg.Parameters = params
 		  If prefix.Trim <> "" Then
-		    Me.Sender = IRC.Hostmask.FromString(prefix)
+		    msg.Sender = IRC.Hostmask.FromString(prefix)
 		  End If
-		End Sub
+		  
+		  Return msg
+		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
