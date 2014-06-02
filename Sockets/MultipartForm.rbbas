@@ -30,9 +30,9 @@ Implements Sockets.Serializable
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		 Shared Function FromString(Data As String, Boundary As String) As MultipartForm
+		 Shared Function FromString(FormData As String, Boundary As String) As MultipartForm
 		  Dim form As New MultipartForm
-		  Dim elements() As String = Split(Data, "--" + Boundary + CRLF)
+		  Dim elements() As String = Split(FormData, "--" + Boundary + CRLF)
 		  form.Boundary = Boundary
 		  
 		  Dim ecount As Integer = UBound(elements)
@@ -52,7 +52,7 @@ Implements Sockets.Serializable
 		        Exit Do
 		      End If
 		    Loop
-		    If CountFields(line, ";") < 3 Then 'form data
+		    If CountFields(line, ";") < 3 Then 'form FormData
 		      form.Element(nm) = NthField(elements(i), CRLF + CRLF, 2)
 		    Else 'file
 		      Dim filename As String = NthField(line, ";", 3)

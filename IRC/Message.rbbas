@@ -2,29 +2,29 @@
 Protected Class Message
 Implements Sockets.Serializable
 	#tag Method, Flags = &h0
-		 Shared Function FromString(Raw As String) As IRC.Message
+		 Shared Function FromString(MessageLine As String) As IRC.Message
 		  Dim msg As New IRC.Message
 		  Dim space As String = Chr(&h20)
 		  Dim colon As String = Chr(&h3a)
 		  Dim prefix, cmd, params(), trailing As String
 		  
-		  If Left(Raw, 1) = colon Then 'has a prefix
-		    prefix = NthField(Raw, space, 1).Trim
-		    Raw = Replace(Raw, prefix, "").Trim
+		  If Left(MessageLine, 1) = colon Then 'has a prefix
+		    prefix = NthField(MessageLine, space, 1).Trim
+		    MessageLine = Replace(MessageLine, prefix, "").Trim
 		    prefix = Replace(prefix, colon, "")
 		  End If
 		  
-		  cmd = NthField(Raw, space, 1).Trim
-		  Raw = Replace(Raw, cmd, "").Trim
+		  cmd = NthField(MessageLine, space, 1).Trim
+		  MessageLine = Replace(MessageLine, cmd, "").Trim
 		  
-		  Dim i As Integer = InStr(Raw, colon)
+		  Dim i As Integer = InStr(MessageLine, colon)
 		  If i > 0 Then 'trailing
-		    trailing = Right(Raw, Raw.Len - i)
-		    Raw = Replace(Raw, colon + trailing, "")
+		    trailing = Right(MessageLine, MessageLine.Len - i)
+		    MessageLine = Replace(MessageLine, colon + trailing, "")
 		  End If
-		  For i = 1 To CountFields(Raw, space)
-		    If NthField(Raw, space, i).Trim = "" Then Continue
-		    params.Append(NthField(Raw, space, i))
+		  For i = 1 To CountFields(MessageLine, space)
+		    If NthField(MessageLine, space, i).Trim = "" Then Continue
+		    params.Append(NthField(MessageLine, space, i))
 		  Next
 		  If trailing.Trim <> "" Then params.Append(trailing)
 		  

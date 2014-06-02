@@ -2,9 +2,9 @@
 Protected Class Mode
 Implements Sockets.Serializable
 	#tag Method, Flags = &h0
-		 Shared Function FromString(NewMode As String) As IRC.Mode
+		 Shared Function FromString(ModeString As String) As IRC.Mode
 		  Dim m As New IRC.Mode
-		  m.Update(NewMode)
+		  m.Update(ModeString)
 		  Return m
 		  
 		End Function
