@@ -93,27 +93,35 @@ Implements Sockets.Serializable
 
 	#tag Method, Flags = &h0
 		Function ToString() As String
-		  Dim data As String
+		  If Boundary.Trim = "" Then
+		    Boundary = "0x" + Left(EncodeHex(MD5(Format(Microseconds, "############.##########"))) + "00000000000000000000000000000000", 32) + "bOuNdArY"
+		  End If
+		  
+		  Dim data As New MemoryBlock(0)
+		  Dim out As New BinaryStream(data)
+		  out.Write("Content-Type: multipart/form-data; boundary=" + Me.Boundary + CRLF + CRLF)
 		  For Each key As String In mFormElements.Keys
 		    If VarType(mFormElements.Value(Key)) = Variant.TypeString Then
-		      data = data + "--" + Me.Boundary + CRLF
-		      data = data + "Content-Disposition: form-data; name=""" + key + """" + CRLF + CRLF
-		      data = data + mFormElements.Value(key) + CRLF
+		      out.Write("--" + Me.Boundary + CRLF)
+		      out.Write("Content-Disposition: form-data; name=""" + key + """" + CRLF + CRLF)
+		      out.Write(mFormElements.Value(key) + CRLF)
 		    ElseIf mFormElements.Value(Key) IsA FolderItem Then
 		      Dim file As FolderItem = mFormElements.Value(key)
-		      data = data + "--" + Me.Boundary + CRLF
-		      data = data + "Content-Disposition: form-data; name=""file""; filename=""" + File.Name + """" + CRLF
+		      out.Write("--" + Me.Boundary + CRLF)
+		      out.Write("Content-Disposition: form-data; name=""" + key + """; filename=""" + File.Name + """" + CRLF)
 		      Dim type As New ContentType(file)
-		      data = data + "Content-Type: " + type.ToString + CRLF + CRLF
+		      out.Write("Content-Type: " + type.ToString + CRLF + CRLF)
 		      Dim bs As BinaryStream = BinaryStream.Open(File)
-		      data = data + bs.Read(bs.Length) + CRLF
+		      out.Write(bs.Read(bs.Length) + CRLF)
 		      bs.Close
+		    ElseIf DebugBuild Then
+		      Raise New TypeMismatchException ' Strings and folderitems only
 		    End If
 		  Next
 		  
-		  data = data + "--" + Me.Boundary + "--" + CRLF
-		  
-		  Return "Content-Type: multipart/form-data; boundary=" + Me.Boundary + CRLF + CRLF + data
+		  out.Write("--" + Me.Boundary + "--" + CRLF)
+		  out.Close
+		  Return data
 		End Function
 	#tag EndMethod
 
