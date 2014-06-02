@@ -72,6 +72,8 @@ Implements NetStrings.Serializable
 		    arg = DecodeURLComponent(arg)
 		  Next
 		  u.Fragment = DecodeURLComponent(u.Fragment)
+		  
+		  Return u
 		End Function
 	#tag EndMethod
 
