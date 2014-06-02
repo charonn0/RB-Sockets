@@ -1,6 +1,6 @@
 #tag Class
 Protected Class Message
-Implements Sockets.Serializable
+Implements NetStrings.Serializable
 	#tag Method, Flags = &h0
 		 Shared Function FromString(MessageLine As String) As IRC.Message
 		  Dim msg As New IRC.Message

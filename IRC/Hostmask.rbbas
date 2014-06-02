@@ -1,6 +1,6 @@
 #tag Class
 Protected Class Hostmask
-Implements Sockets.Serializable
+Implements NetStrings.Serializable
 	#tag Method, Flags = &h0
 		Sub Constructor(Username As String, Nickname As String, Hostname As String)
 		  Me.Host = Hostname

@@ -1,5 +1,5 @@
 #tag Module
-Protected Module Sockets
+Protected Module NetStrings
 	#tag Method, Flags = &h0
 		Function CRLF() As String
 		  Return EndOfLine.Windows

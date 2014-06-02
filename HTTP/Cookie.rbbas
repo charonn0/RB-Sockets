@@ -1,7 +1,7 @@
 #tag Class
 Protected Class Cookie
 Inherits Pair
-Implements Sockets.Serializable
+Implements NetStrings.Serializable
 	#tag Method, Flags = &h1000
 		Sub Constructor(Raw As String)
 		  'accepts a single raw Cookie string (e.g. "SessionID=12345; Port=80; httpOnly")
@@ -29,7 +29,7 @@ Implements Sockets.Serializable
 		      Case "Path"
 		        Me.Path = v
 		      Case "Expires"
-		        Me.Expires = Sockets.ParseDate(v)
+		        Me.Expires = NetStrings.ParseDate(v)
 		      Case "Port"
 		        Me.Port = Val(v)
 		      Case "Secure"
@@ -72,7 +72,7 @@ Implements Sockets.Serializable
 		  If Me.Expires <> Nil Then
 		    Dim now As New Date
 		    If Me.Expires.TotalSeconds > now.TotalSeconds Then
-		      data = data + "; expires=" + Sockets.ParseDate(Me.Expires)
+		      data = data + "; expires=" + NetStrings.ParseDate(Me.Expires)
 		    End If
 		  End If
 		  

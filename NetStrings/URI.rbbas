@@ -1,6 +1,6 @@
 #tag Class
 Protected Class URI
-Implements Sockets.Serializable
+Implements NetStrings.Serializable
 	#tag Method, Flags = &h0
 		Sub Constructor(URL As String)
 		  ' Pass a URI string to parse. e.g. http://user:password@www.example.com:8080/?foo=bar&bat=baz#Top
@@ -182,6 +182,7 @@ Implements Sockets.Serializable
 			Name="Host"
 			Group="Behavior"
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
