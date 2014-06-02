@@ -2,77 +2,77 @@
 Protected Class URI
 Implements NetStrings.Serializable
 	#tag Method, Flags = &h0
-		Sub Constructor(URL As String)
+		 Shared Function FromString(URL As String) As NetStrings.URI
 		  ' Pass a URI string to parse. e.g. http://user:password@www.example.com:8080/?foo=bar&bat=baz#Top
-		  
+		  Dim u As New NetStrings.URI
 		  If NthField(URL, ":", 1) <> "mailto" Then
 		    If InStr(URL, "://") > 0 Then
-		      Scheme = NthField(URL, "://", 1)
-		      URL = URL.Replace(Scheme + "://", "")
+		      u.Scheme = NthField(URL, "://", 1)
+		      URL = URL.Replace(u.Scheme + "://", "")
 		    End If
 		    
 		    If Instr(URL, "@") > 0 Then //  USER:PASS@Domain
-		      Username = NthField(URL, ":", 1)
-		      URL = URL.Replace(Username + ":", "")
+		      u.Username = NthField(URL, ":", 1)
+		      URL = URL.Replace(u.Username + ":", "")
 		      
-		      Password = NthField(URL, "@", 1)
-		      URL = URL.Replace(Password + "@", "")
+		      u.Password = NthField(URL, "@", 1)
+		      URL = URL.Replace(u.Password + "@", "")
 		    End If
 		    
 		    If Instr(URL, ":") > 0 And Left(URL, 1) <> "[" Then //  Domain:Port
 		      Dim s As String = NthField(URL, ":", 2)
 		      s = NthField(s, "?", 1)
-		      Port = Val(s)
-		      URL = URL.Replace(":" + Format(Port, "######"), "")
-		    ElseIf Left(URL, 1) = "[" And InStr(URL, "]:") > 0 Then ' ipv6 with port
+		      u.Port = Val(s)
+		      URL = URL.Replace(":" + Format(u.Port, "######"), "")
+		    ElseIf Left(URL, 1) = "[" And InStr(URL, "]:") > 0 Then ' ipv6 with u.Port
 		      Dim s As String = NthField(URL, "]:", 2)
 		      s = NthField(s, "?", 1)
-		      Port = Val(s)
-		      URL = URL.Replace("]:" + Format(Port, "######"), "]")
+		      u.Port = Val(s)
+		      URL = URL.Replace("]:" + Format(u.Port, "######"), "]")
 		    Else
-		      Port = SchemeToPort(Scheme)
+		      u.Port = SchemeToPort(u.Scheme)
 		    End If
 		    
 		    
 		    If Instr(URL, "#") > 0 Then
-		      Fragment = NthField(URL, "#", 2)  //    #fragment
-		      URL = URL.Replace("#" + Fragment, "")
+		      u.Fragment = NthField(URL, "#", 2)  //    #u.Fragment
+		      URL = URL.Replace("#" + u.Fragment, "")
 		    End If
 		    
-		    Host = NthField(URL, "/", 1)  //  [sub.]domain.tld
-		    URL = URL.Replace(Host, "")
+		    u.Host = NthField(URL, "/", 1)  //  [sub.]domain.tld
+		    URL = URL.Replace(u.Host, "")
 		    
 		    If InStr(URL, "?") > 0 Then
-		      Path = NthField(URL, "?", 1)  //    /foo/bar.php
-		      URL = URL.Replace(Path + "?", "")
-		      Arguments = Split(URL, "&")
+		      u.Path = NthField(URL, "?", 1)  //    /foo/bar.php
+		      URL = URL.Replace(u.Path + "?", "")
+		      u.Arguments = Split(URL, "&")
 		    ElseIf URL.Trim <> "" Then
-		      Path = URL.Trim
+		      u.Path = URL.Trim
 		    End If
-		    Path = ReplaceAll(Path, "/..", "") 'prevent directory traversal
+		    u.Path = ReplaceAll(u.Path, "/..", "") 'prevent directory traversal
 		  Else
-		    Scheme = "mailto"
+		    u.Scheme = "mailto"
 		    URL = Replace(URL, "mailto:", "")
-		    Username = NthField(URL, "@", 1)
-		    URL = Replace(URL, Username + "@", "")
+		    u.Username = NthField(URL, "@", 1)
+		    URL = Replace(URL, u.Username + "@", "")
 		    
 		    If InStr(URL, "?") > 0 Then
-		      Host = NthField(URL, "?", 1)
-		      Arguments = Split(NthField(URL, "?", 2), "&")
+		      u.Host = NthField(URL, "?", 1)
+		      u.Arguments = Split(NthField(URL, "?", 2), "&")
 		    Else
-		      Host = URL
+		      u.Host = URL
 		    End If
 		  End If
-		  Scheme = DecodeURLComponent(Scheme)
-		  Username = DecodeURLComponent(Username)
-		  Password = DecodeURLComponent(Password)
-		  Host = DecodeURLComponent(Host)
-		  Path = DecodeURLComponent(Path)
-		  For Each arg As String In Arguments
+		  u.Scheme = DecodeURLComponent(u.Scheme)
+		  u.Username = DecodeURLComponent(u.Username)
+		  u.Password = DecodeURLComponent(u.Password)
+		  u.Host = DecodeURLComponent(u.Host)
+		  u.Path = DecodeURLComponent(u.Path)
+		  For Each arg As String In u.Arguments
 		    arg = DecodeURLComponent(arg)
 		  Next
-		  Fragment = DecodeURLComponent(Fragment)
-		End Sub
+		  u.Fragment = DecodeURLComponent(u.Fragment)
+		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
