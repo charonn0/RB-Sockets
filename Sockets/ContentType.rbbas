@@ -20,8 +20,8 @@ Implements Sockets.Serializable
 
 	#tag Method, Flags = &h0
 		Sub Constructor(TargetFile As FolderItem)
-		  Dim t As String
-		  If TargetFile <> Nil Then t = MIMETypes.Lookup(NthField(TargetFile.Name, ".", CountFields(TargetFile.Name, ".")), "application/octet-stream")
+		  Dim t As String = "application/octet-stream"
+		  If TargetFile <> Nil Then t = MIMETypes.Lookup(NthField(TargetFile.Name, ".", CountFields(TargetFile.Name, ".")), t)
 		  Me.Constructor(t)
 		End Sub
 	#tag EndMethod
@@ -117,6 +117,7 @@ Implements Sockets.Serializable
 	#tag Method, Flags = &h0
 		Function ToString() As String
 		  'serializes the object
+		  
 		  Dim data As String = SuperType + "/" + SubType
 		  If Me.Weight < 1 Then
 		    data = data + "; q=" + Format(Me.Weight, ".##")
