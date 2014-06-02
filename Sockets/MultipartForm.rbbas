@@ -30,7 +30,7 @@ Implements Sockets.Serializable
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		 Shared Function FromData(Data As String, Boundary As String) As MultipartForm
+		 Shared Function FromString(Data As String, Boundary As String) As MultipartForm
 		  Dim form As New MultipartForm
 		  Dim elements() As String = Split(Data, "--" + Boundary + CRLF)
 		  form.Boundary = Boundary
