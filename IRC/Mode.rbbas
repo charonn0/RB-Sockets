@@ -3,82 +3,8 @@ Protected Class Mode
 Implements Sockets.Serializable
 	#tag Method, Flags = &h0
 		 Shared Function FromString(NewMode As String) As IRC.Mode
-		  Dim modes() As String = Split(NewMode, "")
-		  Dim direction As Boolean
 		  Dim m As New IRC.Mode
-		  If modes(0) = "-" Then
-		    direction = False
-		  Else
-		    direction = True
-		  End If
-		  
-		  For i As Integer = 0 To UBound(modes)
-		    Select Case modes(i)
-		      
-		    Case "o"
-		      m.Operator = direction
-		      
-		    Case "p"
-		      m.PrivateChannel = direction
-		      
-		    Case "s"
-		      m.SecretChannel = direction
-		      m.ReceivesSNotices = direction
-		      
-		    Case "i"
-		      m.InviteOnly = direction
-		      m.Invisible = direction
-		      
-		    Case "t"
-		      m.TopicProtected = direction
-		      
-		    Case "n"
-		      m.NoOutsideMessages = direction
-		      
-		    Case "m"
-		      m.Moderated = direction
-		      
-		    Case "l"
-		      m.Limit = Val(NthField(NewMode, " ", 2))
-		      
-		    Case "b"
-		      m.BanMasks.Append(NthField(NewMode, " ", 2))
-		      
-		    Case "v"
-		      m.Voiced = direction
-		      
-		    Case "k"
-		      m.KeyRequired = direction
-		      If direction Then
-		        m.ChannelKey = NthField(NewMode, " ", 2)
-		      End If
-		      
-		    Case "h"
-		      m.HalfOp = direction
-		      
-		    Case "q"
-		      m.Founder = direction
-		      
-		    Case "x"
-		      m.HideHost = direction
-		      
-		    Case "+"
-		      If Not direction Then direction = Not direction
-		      
-		    Case "-"
-		      If direction Then direction = Not direction
-		      
-		    Else
-		      If modes(i).Trim = "" Then Exit For  //No more modes!
-		      //An invalid MODE character.
-		      Dim ircerr As New RuntimeException
-		      ircerr.ErrorNumber = 472  //ERR_UNKNOWNMODE
-		      ircerr.Message = modes(i) + " :is unknown mode char to me"
-		      Raise ircerr
-		      
-		    End Select
-		    
-		  Next
+		  m.Update(NewMode)
 		  Return m
 		  
 		End Function
