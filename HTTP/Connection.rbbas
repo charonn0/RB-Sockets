@@ -6,27 +6,29 @@ Inherits SSLSocket
 		  ' This method receives and processes all requests made to the socket,
 		  ' raises the Message event.
 		  
-		  Do Until InStr(Me.Lookahead, CRLF + CRLF) = 0
+		  Do Until InStrB(Me.Lookahead, CRLF + CRLF) = 0
+		    Dim peek As String = Me.Lookahead
 		    Dim sz As Integer = InStrB(Me.Lookahead, CRLF + CRLF) + 3
-		    Dim data As MemoryBlock = Left(Me.Lookahead, sz)
+		    Dim data As MemoryBlock = LeftB(Me.Lookahead, sz)
 		    Dim line As MemoryBlock
-		    line = NthField(data.Trim, CRLF, 1)
-		    If CountFields(line.Trim, " ") <> 3 Then
+		    line = NthFieldB(data.Trim, CRLF, 1)
+		    If CountFieldsB(line.Trim, " ") <> 3 Then
 		      Return
 		    End If
-		    data = Replace(data, line + CRLF, "")
-		    Dim h As MemoryBlock = NthField(data, CRLF + CRLF, 1)
+		    data = ReplaceB(data, line + CRLF, "")
+		    Dim h As MemoryBlock = NthFieldB(data, CRLF + CRLF, 1)
 		    Dim head As New HTTP.Headers(h)
-		    Dim content As MemoryBlock = Replace(data, h, "")
+		    Dim content As MemoryBlock '= Replace(data, h, "")
 		    If head.HasHeader("Content-Length") Then
 		      Dim cl As Integer = Val(head.Value("Content-Length"))
-		      If cl  + sz > Me.Lookahead.Len Then ' still data coming
+		      If cl  + sz > Me.Lookahead.LenB Then ' still data coming
 		        Return
 		      End If
 		      Call Me.Read(sz)
-		      content = content + Me.Read(cl)
+		      content = Me.Read(cl)
 		    Else
 		      Call Me.Read(sz)
+		      content = Me.ReadAll
 		    End If
 		    RaiseEvent Message(line, head, content)
 		  Loop

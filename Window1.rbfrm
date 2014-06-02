@@ -78,15 +78,6 @@ End
 
 #tag Events Client1
 	#tag Event
-		Sub Connected()
-		  Dim h As New HTTP.Headers
-		  h.AppendHeader("Host", "www.google.com")
-		  h.AppendHeader("Connection", "close")
-		  h.AcceptableTypes.Append(New ContentType("text/html"))
-		  Me.SendMessage("GET", "/", h, "", 1.1)
-		End Sub
-	#tag EndEvent
-	#tag Event
 		Sub HandleResponse(Status As Integer, Headers As HTTP.Headers, Content As String, ProtocolVersion As Single)
 		  Break
 		End Sub
@@ -95,10 +86,7 @@ End
 #tag Events PushButton1
 	#tag Event
 		Sub Action()
-		  Client1.Address = "www.google.com"
-		  Client1.Port = 80
-		  Client1.Secure = False
-		  Client1.Connect
+		  Client1.Get("http://192.168.1.4:8080/")
 		End Sub
 	#tag EndEvent
 #tag EndEvents
