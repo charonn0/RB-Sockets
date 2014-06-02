@@ -246,7 +246,7 @@ Protected Module Sockets
 	#tag Method, Flags = &h1
 		Protected Function SchemeToPort(Scheme As String) As Integer
 		  Static mPorts As Dictionary
-		  If mPorts = Nil Then 
+		  If mPorts = Nil Then
 		    mPorts = New Dictionary( _
 		    "http":80, _
 		    "https":443, _
@@ -263,7 +263,7 @@ Protected Module Sockets
 		    "nntp":119, _
 		    "ntp":123, _
 		    "irc":6667)
-		    #pragma Warning "Fix Me"
+		    #pragma Warning "To do"
 		    ' Add more ports
 		  End If
 		  
