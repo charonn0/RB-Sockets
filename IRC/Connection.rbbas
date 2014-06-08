@@ -21,9 +21,57 @@ Inherits SSLSocket
 	#tag EndEvent
 
 
+	#tag Method, Flags = &h1
+		Protected Sub Close()
+		  Super.Close
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub Connect()
+		  Super.Connect
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub Disconnect()
+		  Super.Disconnect
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub Listen()
+		  Super.Listen
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function Lookahead(Encodinng As TextEncoding = nil) As String
+		  Return Super.Lookahead()
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function Read(byteCount As Integer, encoding As TextEncoding = Nil) As String
+		  Return Super.Read(byteCount, encoding)
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function ReadAll(encoding As TextEncoding = Nil) As String
+		  
+		End Function
+	#tag EndMethod
+
 	#tag Method, Flags = &h0
 		Sub SendMessage(Msg As IRC.Message)
 		  Me.Write(Msg.ToString)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub Write(Text As String)
+		  
 		End Sub
 	#tag EndMethod
 
@@ -31,11 +79,6 @@ Inherits SSLSocket
 	#tag Hook, Flags = &h0
 		Event MessageReceived(Message As IRC.Message)
 	#tag EndHook
-
-
-	#tag Property, Flags = &h0
-		Host As Hostmask
-	#tag EndProperty
 
 
 	#tag ViewBehavior
