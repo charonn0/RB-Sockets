@@ -63,11 +63,7 @@ Inherits HTTP.Connection
 
 	#tag Method, Flags = &h0
 		Sub SendMessage(MethodName As String, Path As String, Headers As HTTP.Headers, Content As String, ProtocolVersion As Single = 1.0)
-		  Dim p As String
-		  For i As Integer = 1 To CountFields(Path, "/") - 1
-		    p = p + "/" + EncodeURLComponent(NthField(Path, "/", i))
-		  Next
-		  Dim line As String = Uppercase(MethodName) + " " + p + " HTTP/" + Format(ProtocolVersion, "0.0")
+		  Dim line As String = Uppercase(MethodName) + " " + Path + " HTTP/" + Format(ProtocolVersion, "0.0")
 		  Super.SendMessage(line, Headers, Content)
 		End Sub
 	#tag EndMethod

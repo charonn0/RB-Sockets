@@ -115,17 +115,13 @@ Protected Module NetStrings
 		  Case 108
 		    msg =  "Out of memory."
 		  Else
-		    If Not Sender.IsConnected Then
-		      msg =  "Socket not connected."
-		    Else
-		      msg =  "System error code (" + Str(Sender.LastErrorCode) + ")."
-		      #If TargetWin32 Then
-		        Declare Function FormatMessageW Lib "Kernel32" (Flags As Integer, Source As Integer, _
-		        MessageId As Integer, LangId As Integer, Buffer As ptr, nSize As Integer, Arguments As Integer) As Integer
-		        Dim buffer As New MemoryBlock(2048)
-		        If FormatMessageW(&h1000, 0, Sender.LastErrorCode, 0 , Buffer, Buffer.Size, 0) <> 0 Then msg =  Buffer.WString(0)
-		      #endif
-		    End If
+		    msg =  "System error code (" + Str(Sender.LastErrorCode) + ")."
+		    #If TargetWin32 Then
+		      Declare Function FormatMessageW Lib "Kernel32" (Flags As Integer, Source As Integer, _
+		      MessageId As Integer, LangId As Integer, Buffer As ptr, nSize As Integer, Arguments As Integer) As Integer
+		      Dim buffer As New MemoryBlock(2048)
+		      If FormatMessageW(&h1000, 0, Sender.LastErrorCode, 0 , Buffer, Buffer.Size, 0) <> 0 Then msg =  Buffer.WString(0)
+		    #endif
 		  End Select
 		  
 		  Return msg
@@ -247,24 +243,26 @@ Protected Module NetStrings
 		Protected Function SchemeToPort(Scheme As String) As Integer
 		  Static mPorts As Dictionary
 		  If mPorts = Nil Then
-		    mPorts = New Dictionary( _
-		    "http":80, _
-		    "https":443, _
-		    "ftp":21, _
-		    "ssh":22, _
-		    "telnet":23, _
-		    "smtp":25, _
-		    "smtps":25, _
-		    "pop2":109, _
-		    "pop3":110, _
-		    "ident":113, _
-		    "auth":113, _
-		    "sftp":115, _
-		    "nntp":119, _
-		    "ntp":123, _
-		    "irc":6667)
-		    #pragma Warning "To do"
-		    ' Add more ports
+		    Dim js As New JSONItem(JSPORTS)
+		    mPorts = js
+		    'mPorts = New Dictionary( _
+		    '"http":80, _
+		    '"https":443, _
+		    '"ftp":21, _
+		    '"ssh":22, _
+		    '"telnet":23, _
+		    '"smtp":25, _
+		    '"smtps":25, _
+		    '"pop2":109, _
+		    '"pop3":110, _
+		    '"ident":113, _
+		    '"auth":113, _
+		    '"sftp":115, _
+		    '"nntp":119, _
+		    '"ntp":123, _
+		    '"irc":6667)
+		    '#pragma Warning "To do"
+		    '' Add more ports
 		  End If
 		  
 		  Return mPorts.Lookup(Scheme, -1)
