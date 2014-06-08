@@ -243,26 +243,24 @@ Protected Module NetStrings
 		Protected Function SchemeToPort(Scheme As String) As Integer
 		  Static mPorts As Dictionary
 		  If mPorts = Nil Then
-		    Dim js As New JSONItem(JSPORTS)
-		    mPorts = js
-		    'mPorts = New Dictionary( _
-		    '"http":80, _
-		    '"https":443, _
-		    '"ftp":21, _
-		    '"ssh":22, _
-		    '"telnet":23, _
-		    '"smtp":25, _
-		    '"smtps":25, _
-		    '"pop2":109, _
-		    '"pop3":110, _
-		    '"ident":113, _
-		    '"auth":113, _
-		    '"sftp":115, _
-		    '"nntp":119, _
-		    '"ntp":123, _
-		    '"irc":6667)
-		    '#pragma Warning "To do"
-		    '' Add more ports
+		    mPorts = New Dictionary( _
+		    "http":80, _
+		    "https":443, _
+		    "ftp":21, _
+		    "ssh":22, _
+		    "telnet":23, _
+		    "smtp":25, _
+		    "smtps":25, _
+		    "pop2":109, _
+		    "pop3":110, _
+		    "ident":113, _
+		    "auth":113, _
+		    "sftp":115, _
+		    "nntp":119, _
+		    "ntp":123, _
+		    "irc":6667)
+		    #pragma Warning "To do"
+		    ' Add more ports
 		  End If
 		  
 		  Return mPorts.Lookup(Scheme, -1)

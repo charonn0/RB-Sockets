@@ -36,7 +36,7 @@ Implements NetStrings.Serializable
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		 Shared Function FromString(urlencodedform As String) As HTTP.URLEncodedForm
+		 Shared Function FromString(urlencodedform As String) As URLEncodedForm
 		  Dim items() As String = Split(urlencodedform.Trim, "&")
 		  Dim f As New Dictionary
 		  Dim dcount As Integer = UBound(items)
@@ -44,7 +44,7 @@ Implements NetStrings.Serializable
 		    f.Value(DecodeURLComponent(NthField(items(i), "=", 1))) = DecodeURLComponent(NthField(items(i), "=", 2))
 		  Next
 		  
-		  Return New HTTP.URLEncodedForm(f)
+		  Return New URLEncodedForm(f)
 		End Function
 	#tag EndMethod
 

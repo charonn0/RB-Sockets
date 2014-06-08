@@ -116,9 +116,9 @@ Inherits InternetHeaders
 		#tag Getter
 			Get
 			  If Me.HasHeader("Content-Type") Then
-			    Return New HTTP.ContentType(Me.Value("Content-Type"))
+			    Return New ContentType(Me.Value("Content-Type"))
 			  End If
-			  Return New HTTP.ContentType("*/*")
+			  Return New ContentType("*/*")
 			  
 			End Get
 		#tag EndGetter
@@ -127,7 +127,7 @@ Inherits InternetHeaders
 			  Me.SetHeader("Content-Type", value.ToString)
 			End Set
 		#tag EndSetter
-		ContentType As HTTP.ContentType
+		ContentType As ContentType
 	#tag EndComputedProperty
 
 	#tag Property, Flags = &h1
