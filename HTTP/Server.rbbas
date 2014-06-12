@@ -1,6 +1,27 @@
 #tag Class
 Protected Class Server
 Inherits HTTP.Connection
+	#tag Event
+		Sub Message(MessageLine As String, Headers As HTTP.Headers, Content As String)
+		  If CountFields(MessageLine.Trim, " ") <> 3 Then
+		    #pragma BreakOnExceptions Off
+		    Raise New UnsupportedFormatException
+		  End If
+		  Dim mth As String
+		  Dim proto As Single
+		  Dim pth As NetStrings.URI
+		  mth = NthField(MessageLine, " ", 1).Trim
+		  pth = NetStrings.URI.FromString(NthField(MessageLine, " ", 2))
+		  proto = CDbl(Replace(NthField(MessageLine, " ", 3).Trim, "HTTP/", ""))
+		  If Not RaiseEvent HandleRequest(mth, pth.ToString, Headers, Content, proto) Then
+		    Dim h As New HTTP.Headers
+		    Me.SendMessage(404, h, "")
+		  End If
+		  Me.Close
+		End Sub
+	#tag EndEvent
+
+
 	#tag Method, Flags = &h1
 		Protected Shared Function DefaultPage(StatusCode As Integer) As String
 		  Dim data As String = ReplaceAll(BlankPage, "%HTTPCODE%", HTTP.FormatStatus(StatusCode))
