@@ -7,7 +7,10 @@ Inherits SSLSocket
 		  ' raises the Message event.
 		  
 		  Do Until InStrB(Me.Lookahead, CRLF + CRLF) = 0
-		    Dim peek As String = Me.Lookahead
+		    #If DebugBuild Then
+		      Dim peek As String
+		      peek = Me.Lookahead
+		    #endif
 		    Dim sz As Integer = InStrB(Me.Lookahead, CRLF + CRLF) + 3
 		    Dim data As MemoryBlock = LeftB(Me.Lookahead, sz)
 		    Dim line As MemoryBlock

@@ -46,8 +46,8 @@ Inherits SSLSocket
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Function Lookahead(Encodinng As TextEncoding = nil) As String
-		  Return Super.Lookahead()
+		Protected Function Lookahead(Encoding As TextEncoding = nil) As String
+		  Return Super.Lookahead(Encoding)
 		End Function
 	#tag EndMethod
 
@@ -57,9 +57,9 @@ Inherits SSLSocket
 		End Function
 	#tag EndMethod
 
-	#tag Method, Flags = &h0
-		Function ReadAll(encoding As TextEncoding = Nil) As String
-		  
+	#tag Method, Flags = &h1
+		Protected Function ReadAll(encoding As TextEncoding = Nil) As String
+		  Return Super.ReadAll(encoding)
 		End Function
 	#tag EndMethod
 
@@ -69,9 +69,9 @@ Inherits SSLSocket
 		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h0
-		Sub Write(Text As String)
-		  
+	#tag Method, Flags = &h1
+		Protected Sub Write(Text As String)
+		  Super.Write(Text)
 		End Sub
 	#tag EndMethod
 
