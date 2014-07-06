@@ -49,7 +49,7 @@ Implements NetStrings.Serializable
 		    ElseIf URL.Trim <> "" Then
 		      u.Path = URL.Trim
 		    End If
-		    u.Path = ReplaceAll(u.Path, "/..", "") 'prevent directory traversal
+		    
 		  Else
 		    u.Scheme = "mailto"
 		    URL = Replace(URL, "mailto:", "")
@@ -93,7 +93,7 @@ Implements NetStrings.Serializable
 		    URL = URL + "@"
 		  End If
 		  
-		  If Left(Host, 1) = "[" And Right(Host, 1) = "]" Then ' IP literal
+		  If Left(Host, 1) = "[" And Right(Host, 1) = "]" Then ' IPv6 literal
 		    URL = URL + Host
 		  Else
 		    URL = URL + EncodeURLComponent(Host)
