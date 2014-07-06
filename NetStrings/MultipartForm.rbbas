@@ -86,8 +86,7 @@ Implements NetStrings.Serializable
 
 	#tag Method, Flags = &h0
 		Function Name(Index As Integer) As String
-		  Dim s() As Variant = mFormElements.Keys
-		  Return s(Index).StringValue
+		  Return mFormElements.Key(Index).StringValue
 		End Function
 	#tag EndMethod
 
