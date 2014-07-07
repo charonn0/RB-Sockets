@@ -22,8 +22,10 @@ Implements NetStrings.Serializable
 		    If Instr(URL, ":") > 0 And Left(URL, 1) <> "[" Then //  Domain:Port
 		      Dim s As String = NthField(URL, ":", 2)
 		      s = NthField(s, "?", 1)
-		      u.Port = Val(s)
-		      URL = URL.Replace(":" + Format(u.Port, "######"), "")
+		      If Val(s) > 0 Then
+		        u.Port = Val(s)
+		        URL = URL.Replace(":" + Format(u.Port, "######"), "")
+		      End If
 		    ElseIf Left(URL, 1) = "[" And InStr(URL, "]:") > 0 Then ' ipv6 with u.Port
 		      Dim s As String = NthField(URL, "]:", 2)
 		      s = NthField(s, "?", 1)
