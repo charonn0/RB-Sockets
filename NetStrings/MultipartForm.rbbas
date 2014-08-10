@@ -135,7 +135,7 @@ Implements NetStrings.Serializable
 
 
 	#tag Property, Flags = &h0
-		Boundary As String = "bOrEdOmSoFtBoUnDaRy"
+		Boundary As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
