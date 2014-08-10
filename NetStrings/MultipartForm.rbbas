@@ -91,6 +91,15 @@ Implements NetStrings.Serializable
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub Name(Index As Integer, Assigns NewName As String)
+		  Dim nm As String = mFormElements.Key(Index)
+		  Dim v As Variant = mFormElements.Value(nm)
+		  mFormElements.Remove(nm)
+		  mFormElements.Value(NewName) = v
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function ToString() As String
 		  If Boundary.Trim = "" Then
 		    Boundary = "0x" + Left(EncodeHex(MD5(Format(Microseconds, "############.##########"))) + "00000000000000000000000000000000", 32) + "bOuNdArY"
