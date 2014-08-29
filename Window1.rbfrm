@@ -182,15 +182,3 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events PushButton1
-	#tag Event
-		Sub Action()
-		  'Client1.Get("http://lax.futurehosting.com/test.zip")
-		  ''"http://192.168.1.4:8080/")
-		  Client1.Host = New IRC.Hostmask("Coffee", "Coffee", "")
-		  Client1.Password = "socrates1"
-		  Client1.Connect("irc.geekshed.net", 6667, False)
-		  
-		End Sub
-	#tag EndEvent
-#tag EndEvents
